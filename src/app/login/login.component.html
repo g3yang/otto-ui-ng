@@ -1,0 +1,24 @@
+<div class = "main-container">
+  <mat-card>
+      <form [formGroup]="loginForm" (ngSubmit)="onFormSubmit(loginForm.value)">
+          <mat-form-field class="full-width">
+              <input matInput placeholder="{{'EMAIL'|translate}}" formControlName="email"
+                     [errorStateMatcher]="matcher">
+              <mat-error>
+                <span *ngIf="!loginForm.get('email').valid && loginForm.get('email').touched">Please enter Email</span>
+              </mat-error>
+          </mat-form-field>
+          <mat-form-field class="full-width">
+              <input matInput placeholder="{{'PASSWORD'|translate}}" formControlName="password"
+                     [errorStateMatcher]="matcher">
+              <mat-error>
+                <span *ngIf="!loginForm.get('password').valid && loginForm.get('password').touched">Please enter Password</span>
+              </mat-error>
+          </mat-form-field>
+          <div class="button-row">
+              <button type="submit" [disabled]="!loginForm.valid" mat-flat-button color="primary">Login</button>
+          </div>
+      </form>  
+  </mat-card>
+  
+</div>

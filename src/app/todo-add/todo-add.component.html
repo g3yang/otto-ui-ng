@@ -1,0 +1,17 @@
+<div class="mat-elevation-z8">
+  <mat-card>
+    <form [formGroup]="newTodoForm" (ngSubmit)="onFormSubmit()">
+      <mat-form-field class="full-width">
+            <input matInput placeholder="Title?" formControlName="title"
+            [errorStateMatcher]="matcher">
+      </mat-form-field>
+      <mat-form-field class="full-width">
+              <input matInput placeholder="Description?" formControlName="description"
+              [errorStateMatcher]="matcher">
+      </mat-form-field>
+      <div class="button-row">
+          <button type="submit" [disabled]="!newTodoForm.valid" mat-flat-button color="primary">Add</button>
+      </div>
+  </form>
+  </mat-card>  
+</div>

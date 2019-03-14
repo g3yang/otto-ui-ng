@@ -1,0 +1,20 @@
+<html>
+    <head>
+        <script src = 'https://unpkg.com/zone.js@0.8.29/dist/zone.js'></script>
+    </head>
+    <body>
+        <h1>Counting Pending Tasks</h1>
+
+        <p>We want to know about just the events from a single mouse click
+        while a bunch of other stuff is happening on the page</p>
+        
+        <p>This is useful in E2E testing. Because you know when there are
+        no async tasks, you avoid adding timeouts that wait for tasks that
+        run for an indeterminable amount of time.</p>
+        
+        <button id="b1">Start</button>
+        
+        <p id="output"></p>
+        <script src='index.js'></script>
+    </body>
+</html>
