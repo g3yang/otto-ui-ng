@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { catchError, tap, map } from 'rxjs/operators';
+import _ from 'lodash';
 
 @Injectable({
     providedIn: 'root'
@@ -37,5 +38,16 @@ export class TodoService {
             return t.id == id;
         });
         return of(todo);
+    }
+
+    saveTodo(updatedTodo){
+        const index = this.todos.findIndex(t=>t.id == updatedTodo.id);
+        this.todos[index] =updatedTodo;
+    }
+
+    deleteTodo(id){
+        _.remove(this.todos, (todo)=>{
+            return todo.id == id;
+        });
     }
 }

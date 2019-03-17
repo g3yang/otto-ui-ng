@@ -35,4 +35,12 @@ export class TodoEditComponent implements OnInit {
     })
   }
 
+  save(){
+    this.api.saveTodo({
+      id:this.id, 
+      ...this.todoForm.value
+    });
+    this.router.navigate(['/todos']);
+  }
+
 }
