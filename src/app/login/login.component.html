@@ -9,7 +9,7 @@
               </mat-error>
           </mat-form-field>
           <mat-form-field class="full-width">
-              <input matInput placeholder="{{'PASSWORD'|translate}}" formControlName="password"
+              <input matInput placeholder="{{'PASSWORD'|translate}}" formControlName="password" type="password"
                      [errorStateMatcher]="matcher">
               <mat-error>
                 <span *ngIf="!loginForm.get('password').valid && loginForm.get('password').touched">Please enter Password</span>

@@ -4,14 +4,20 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { catchError, tap, map } from 'rxjs/operators';
 import _ from 'lodash';
 
+
+const httpOptions = {
+    headers: new HttpHeaders({'Content-Type': 'application/json'})
+  };
+const apiRoot = "http://localhost:3000/todos";
+
+
 @Injectable({
     providedIn: 'root'
 })
-
 export class TodoService {
     todos;
     currId;
-    constructor(){
+    constructor(private http: HttpClient){
         this.todos=[
             {   id: 1,
                 title: 'Learn NodeJS',
@@ -23,31 +29,37 @@ export class TodoService {
     }
 
     getTodos(){
-        return of(this.todos);
-    }
-
-    addTodo(newTodo){
-        newTodo.id = this.currId;
-        this.currId ++;
-        this.todos.push(newTodo);
-        return of(newTodo);
-    }
-
-    getTodo(id){
-        const todo = this.todos.find((t)=>{
-            return t.id == id;
-        });
-        return of(todo);
-    }
-
-    saveTodo(updatedTodo){
-        const index = this.todos.findIndex(t=>t.id == updatedTodo.id);
-        this.todos[index] =updatedTodo;
+        return this.http.get<any>(apiRoot, httpOptions).pipe(tap(
+            console.log
+        ));
     }
 
     deleteTodo(id){
-        _.remove(this.todos, (todo)=>{
-            return todo.id == id;
-        });
+        const url = `${apiRoot}/${id}`;
+        return this.http.delete<any>(url, httpOptions).pipe(tap(
+            console.log
+        ));
     }
+
+
+    addTodo(newTodo){
+        return this.http.post<any>(apiRoot, newTodo,httpOptions).pipe(tap(
+            console.log
+        ));
+    }
+
+    getTodo(id){
+        const url = `${apiRoot}/${id}`;
+        return this.http.get<any>(url).pipe(tap(
+            console.log
+        ));
+    }
+
+    saveTodo(updatedTodo){
+        const id = updatedTodo.id;
+        const url = `${apiRoot}/${id}`;
+        return this.http.put<any>(url,updatedTodo);
+    }
+
+    
 }

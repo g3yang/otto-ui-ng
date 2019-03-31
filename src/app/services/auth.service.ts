@@ -12,6 +12,20 @@ const apiRoot = "http://localhost:3000";
 @Injectable({
     providedIn: 'root'
 })
-export class UserService {
+export class AuthService {
     constructor(private http: HttpClient) { }
+
+    getToken(){
+        return localStorage.getItem('token');
+    }
+    
+    authenticate(user):Observable<any>{
+        const url = `${apiRoot}/token`;
+        return this.http.post(url, user, httpOptions).pipe(
+            tap(val=>{
+                console.log(`Token: ${val.token}`);
+                localStorage.setItem('token', val.token);
+            })
+        );
+    }
 }

@@ -27,7 +27,9 @@ import { TodoEditComponent } from './todo-edit/todo-edit.component';
 import { HttpClient} from '@angular/common/http';
 import {TranslateModule,TranslateLoader} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
-
+import { ProgressBarComponent } from './progress-bar/progress-bar.component';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenInterceptor } from './providers/token.interceptor';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -43,7 +45,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     LoginComponent,
     TodosComponent,
     TodoAddComponent,
-    TodoEditComponent
+    TodoEditComponent,
+    ProgressBarComponent
   ],
   imports: [
     BrowserModule,
@@ -69,7 +72,13 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatCardModule,
     MatFormFieldModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
