@@ -30,6 +30,12 @@ import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import { ProgressBarComponent } from './progress-bar/progress-bar.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './providers/token.interceptor';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { reducers } from './reducers/index';
+import { TodoEffects } from './effects/todo.effect';
+
+
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -57,6 +63,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         deps: [HttpClient]
       }
     }),
+    StoreModule.forRoot(reducers),
+    EffectsModule.forRoot([TodoEffects]),
     FormsModule,
     HttpClientModule,
     AppRoutingModule,

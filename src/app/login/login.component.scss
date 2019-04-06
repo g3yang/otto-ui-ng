@@ -5,3 +5,19 @@
 .button-row {
     margin: 10px 0;
 }
+
+.mat-form-field.ng-dirty.ng-invalid .mat-form-field-underline {
+    background-color: green;
+  }
+
+.mat-form-field.mat-focused .mat-form-field-label {
+    color: white;
+
+    &.mat-accent {
+      color: red;
+    }
+
+    &.mat-warn {
+      color: green;
+    }
+}

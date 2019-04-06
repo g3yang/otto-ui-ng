@@ -1,0 +1,19 @@
+.container {
+    width: 96%;
+    display: flex;
+    flex-flow: row wrap;
+    margin: 10px 2%;
+
+    .bar {
+        height: 10px;
+        border: 1px solid #dcdcdc;
+        color: #000000;
+        background-color: #ddd;
+    }
+    
+    .circle {
+        flex: 1 100%;
+        position: relative;
+    }
+    
+}

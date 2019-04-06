@@ -1,0 +1,42 @@
+
+import { Injectable } from '@angular/core';
+import { Action } from '@ngrx/store';
+import { 
+    Effect, 
+    Actions,
+    ofType
+} from '@ngrx/effects';
+import { Observable, fromEventPattern } from 'rxjs';
+import { map, mergeMap } from 'rxjs/operators';
+
+
+import * as TodoAction from '../actions/todo.action';
+import { Todo } from '../models/todo';
+import { TodoService } from '../services/todo.service';
+
+@Injectable()
+export class TodoEffects {
+
+
+    constructor(private actions$:Actions, private service:TodoService){}
+
+    @Effect()
+    loadTodos$: Observable<Action> = this.actions$.pipe(
+        ofType(TodoAction.ActionTypes.LOAD_START),
+        mergeMap(()=>
+            this.service.getTodos()
+                .pipe( map(todos=>{
+                            const newTodos  = todos.map(t=>{
+                                return {
+                                    id: t._id,
+                                    title: t.title
+                                };
+                            });
+                            return new TodoAction.LoadSuccess(newTodos)
+                        })
+                )
+        )
+    )
+
+}
+

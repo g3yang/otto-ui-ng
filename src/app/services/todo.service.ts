@@ -29,9 +29,7 @@ export class TodoService {
     }
 
     getTodos(){
-        return this.http.get<any>(apiRoot, httpOptions).pipe(tap(
-            console.log
-        ));
+        return this.http.get<any>(apiRoot, httpOptions);
     }
 
     deleteTodo(id){

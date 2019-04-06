@@ -5,7 +5,7 @@
               <input matInput placeholder="{{'EMAIL'|translate}}" formControlName="email"
                      [errorStateMatcher]="matcher">
               <mat-error>
-                <span *ngIf="!loginForm.get('email').valid && loginForm.get('email').touched">Please enter Email</span>
+                <span *ngIf="loginForm.get('email').invalid">Please provide a valid email</span>
               </mat-error>
           </mat-form-field>
           <mat-form-field class="full-width">
