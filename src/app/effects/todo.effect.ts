@@ -38,5 +38,45 @@ export class TodoEffects {
         )
     )
 
+    @Effect()
+    addTodo$: Observable<Action> = this.actions$.pipe(
+        ofType(TodoAction.ActionTypes.ADD),
+        map((action:TodoAction.Add)=> action.payload),
+        mergeMap((todo)=>{
+            return this.service.addTodo(todo)
+                    .pipe( map(()=>{
+                        return new TodoAction.LoadStart();
+                    })
+                )
+        })
+    )
+
+    @Effect()
+    deleteTodo$: Observable<Action> = this.actions$.pipe(
+        ofType(TodoAction.ActionTypes.DELETE),
+        map((action:TodoAction.Delete)=> action.payload),
+        mergeMap((id)=>{
+            return this.service.deleteTodo(id)                    
+                    .pipe( map(()=>{
+                        return new TodoAction.LoadStart();
+                    })
+                )
+        })
+    )
+
+    @Effect()
+    updateTodo$: Observable<Action> = this.actions$.pipe(
+        ofType(TodoAction.ActionTypes.UPDATE),
+        map((action:TodoAction.Update)=> action.payload),
+        mergeMap((updatedTodo)=>{
+            return this.service.saveTodo(updatedTodo)                    
+                    .pipe( map(()=>{
+                        return new TodoAction.LoadStart();
+                    })
+                )
+        })
+    )
+
+
 }
 

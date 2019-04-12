@@ -23,20 +23,24 @@ export class TodosComponent implements OnInit {
   newTodoForm:FormGroup;
   todos$: Observable<Todo[]>;
 
-  constructor(private router: Router, private todoService:TodoService, private formBuilder:FormBuilder,store: Store<fromRoot.State>) { 
-    store.dispatch(new TodoActions.LoadStart());
-    this.todos$ = store.select(RootReducer.getTodos);
+  constructor(private router: Router, private todoService:TodoService, private formBuilder:FormBuilder, private store: Store<fromRoot.State>) { 
   }
 
-  ngOnInit(){}
+  ngOnInit(){
+    this.store.dispatch(new TodoActions.LoadStart());
+    this.todos$ = this.store.select(RootReducer.getTodos);
+  }
 
   delete(id){
-    console.log('To delete '+id);
-    this.todoService.deleteTodo(id).subscribe(()=>{
-      this.todoService.getTodos().subscribe(data=>{
-        console.log(data);
-     //   this.dataSource.data = data;
-      });
-    });
+    this.store.dispatch(new TodoActions.Delete(id));
+    this.todos$ = this.store.select(RootReducer.getTodos);
+  }
+
+  foo(){
+    const div = document.getElementById('foo');
+    const dom = document.createElement('div');
+    dom.innerHTML ="<h1>DIU</h1>";
+    //dom.innerHTML = "<app-todo-add></app-todo-add>";
+    div.append(dom);
   }
 }

@@ -2,7 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { TodoService} from '../services/todo.service';
 import { FormControl, FormGroupDirective, FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
-
+import * as RootReducer from '../reducers/index';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import * as TodoAction from '../actions/todo.action';
 
 @Component({
   selector: 'app-todo-edit',
@@ -15,7 +18,7 @@ export class TodoEditComponent implements OnInit {
   id;
 
   constructor(private router: Router, private route: ActivatedRoute, private formBuilder: FormBuilder, 
-            private api: TodoService) { }
+            private api: TodoService, private store: Store<RootReducer.State>) { }
 
   ngOnInit() {
     this.id = this.route.snapshot.params['id'];
@@ -36,16 +39,11 @@ export class TodoEditComponent implements OnInit {
   }
 
   save(){
-    this.api.saveTodo({
+    this.store.dispatch(new TodoAction.Update({
       id:this.id, 
       ...this.todoForm.value
-    }).subscribe(
-      val=>{
-        console.log(val);
-        this.router.navigate(['/todos']);
-      }
-    );
-    
+    }));
+    this.router.navigate(['/todos']);
   }
 
 }
