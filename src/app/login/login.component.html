@@ -1,4 +1,7 @@
 <div class = "main-container">
+  <a href="javascript:void(0)" (click)="toggle()">Toggle</a> <br/>
+
+  {{lang}}
   <mat-card>
       <form [formGroup]="loginForm" (ngSubmit)="onFormSubmit(loginForm.value)">
           <mat-form-field class="full-width">
@@ -16,7 +19,7 @@
               </mat-error>
           </mat-form-field>
           <div class="button-row">
-              <button type="submit" [disabled]="!loginForm.valid" mat-flat-button color="primary">{{'LOGIN'|| translate}}</button>
+              <button type="submit" [disabled]="!loginForm.valid" mat-flat-button color="primary">{{'LOGIN' | translate}}</button>
           </div>
       </form>  
   </mat-card>

@@ -33,14 +33,11 @@ export class TodosComponent implements OnInit {
 
   delete(id){
     this.store.dispatch(new TodoActions.Delete(id));
-    this.todos$ = this.store.select(RootReducer.getTodos);
   }
 
   foo(){
     const div = document.getElementById('foo');
     const dom = document.createElement('div');
-    dom.innerHTML ="<h1>DIU</h1>";
-    //dom.innerHTML = "<app-todo-add></app-todo-add>";
     div.append(dom);
   }
 }
