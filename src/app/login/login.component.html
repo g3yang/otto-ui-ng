@@ -1,7 +1,6 @@
 <div class = "main-container">
   <a href="javascript:void(0)" (click)="toggle()">Toggle</a> <br/>
-
-  {{lang}}
+   Counter: {{(dummy$|async).counter}}
   <mat-card>
       <form [formGroup]="loginForm" (ngSubmit)="onFormSubmit(loginForm.value)">
           <mat-form-field class="full-width">
@@ -23,5 +22,9 @@
           </div>
       </form>  
   </mat-card>
+
+  <div class="button-row">
+    <button mat-flat-button color="primary" (click)="increment()">Increment</button>
+ </div>
   
 </div>

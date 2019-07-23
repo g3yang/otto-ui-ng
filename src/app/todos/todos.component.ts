@@ -21,23 +21,21 @@ export class TodosComponent implements OnInit {
   todos = [];
   displayedColumns=['title','delete'];
   newTodoForm:FormGroup;
-  todos$: Observable<Todo[]>;
+  ds = new MatTableDataSource();
+
 
   constructor(private router: Router, private todoService:TodoService, private formBuilder:FormBuilder, private store: Store<fromRoot.State>) { 
   }
 
   ngOnInit(){
     this.store.dispatch(new TodoActions.LoadStart());
-    this.todos$ = this.store.select(RootReducer.getTodos);
+    this.store.select(RootReducer.getTodos).subscribe(todos=>{
+      this.ds.data = todos;
+    });
   }
 
   delete(id){
+    console.log(`delete ${id}`);
     this.store.dispatch(new TodoActions.Delete(id));
-  }
-
-  foo(){
-    const div = document.getElementById('foo');
-    const dom = document.createElement('div');
-    div.append(dom);
   }
 }
