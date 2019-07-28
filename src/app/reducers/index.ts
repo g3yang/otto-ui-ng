@@ -27,6 +27,8 @@ export function reducer(state: any, action: any) {
 
 export const getTodoState = (state)=>state.todo;
 
-export const getTodos = createSelector(getTodoState, fromTodos.getTodos);
+export const getTodos = createSelector(getTodoState, fromTodos.getAllTodos);
+
+export const getSelectedTodo = createSelector(getTodoState, fromTodos.getSelectedTodo);
 
 export const getLang = (state)=>state.lang;

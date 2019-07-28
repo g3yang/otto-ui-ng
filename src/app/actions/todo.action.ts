@@ -4,9 +4,20 @@ import { Todo } from '../models/todo';
 export enum ActionTypes {
     LOAD_START = '[Todo Load] Start',
     LOAD_SUCCESS = '[Todo Load] Success',
-    ADD = '[Todo Add]',
-    DELETE = '[Todo Delete]',
-    UPDATE= '[Todo Update]'
+    
+    SELECT = '[Todo] Select',
+
+    ADD = '[Todo] Add',
+    ADD_SUCCESS = '[Todo] Add Success',
+    
+    DELETE = '[Todo] Delete',
+    DELETE_SUCCESS = '[Todo] Delete Success',
+
+    UPDATE= '[Todo Update]',
+    UPDATE_SUCCESS = '[Todo] Update Success',
+
+    UPDATE_TITLE = '[Todo] Update Title',
+    UPDATE_TITLE_SUCCESS = '[Todo] Update Title Success'
 }
 
 export class LoadStart implements Action{
@@ -15,7 +26,12 @@ export class LoadStart implements Action{
 
 export class LoadSuccess implements Action{
     public readonly type = ActionTypes.LOAD_SUCCESS;
-    constructor(public payload: Todo[]) {}
+    constructor(public todos: Todo[]) {}
+}
+
+export class Select implements Action {
+    public readonly type = ActionTypes.SELECT;
+    constructor(public id: string) {}
 }
 
 export class Add implements Action{
@@ -23,16 +39,30 @@ export class Add implements Action{
     constructor(public payload:Todo) {}
 }
 
+export class AddSuccess implements Action {
+    public readonly type = ActionTypes.ADD_SUCCESS;
+    constructor(public payload: Todo) {}
+}
+
 export class Delete implements Action {
     public readonly type = ActionTypes.DELETE;
-    constructor(public payload:string) {}
+    constructor(public id: string) {}
 }
 
-export class Update implements Action {
-    public readonly type = ActionTypes.UPDATE;
-    constructor(public payload:Todo){}
+export class DeleteSuccess implements Action {
+    public readonly type = ActionTypes.DELETE_SUCCESS;
+    constructor(public id:string) {}
 }
 
+export class UpdateTitle implements Action {
+    public readonly type = ActionTypes.UPDATE_TITLE;
+    constructor(public id: string, public newTitle: string) {}
+}
 
-export type Actions = LoadStart | LoadSuccess | Add | Delete | Update;
+export class UpdateTitleSuccess implements Action {
+    public readonly type = ActionTypes.UPDATE_TITLE_SUCCESS;
+    constructor(public id:string, public newTitle:string) {}
+}
+
+export type Actions = LoadStart | LoadSuccess | Add | Delete ;
 

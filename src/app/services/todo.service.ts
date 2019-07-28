@@ -53,10 +53,11 @@ export class TodoService {
         ));
     }
 
-    saveTodo(updatedTodo){
-        const id = updatedTodo.id;
+
+    updateTitle(id, newTitle) {
+        const update = { title: newTitle};
         const url = `${apiRoot}/${id}`;
-        return this.http.put<any>(url,updatedTodo);
+        return this.http.put<any>(url, update);
     }
 
     

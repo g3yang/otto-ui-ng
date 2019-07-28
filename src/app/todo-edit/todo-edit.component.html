@@ -5,11 +5,10 @@
   <mat-card>
     <form [formGroup]="todoForm">
       <mat-form-field class="full-width">
-          <input matInput placeholder="Title" formControlName="title"
-            [errorStateMatcher]="matcher">
+          <input matInput placeholder="Title" formControlName="title" [errorStateMatcher]="matcher">
       </mat-form-field>
       <mat-form-field class="full-width">
-          <input matInput placeholder="Description" formControlName="description"
+          <input matInput placeholder="Description" formControlName="description" readonly
             [errorStateMatcher]="matcher">
       </mat-form-field>
       <div class="button-row">

@@ -6,10 +6,10 @@ import { MatTableDataSource } from '@angular/material/table';
 import _ from 'lodash';
 import * as fromRoot from '../reducers';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
 import * as TodoActions from '../actions/todo.action';
-import { Todo } from '../models/todo';
 import * as RootReducer from '../reducers/index'
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { TodoEditComponent } from '../todo-edit/todo-edit.component';
  
 @Component({
   selector: 'app-todos',
@@ -24,7 +24,9 @@ export class TodosComponent implements OnInit {
   ds = new MatTableDataSource();
 
 
-  constructor(private router: Router, private todoService:TodoService, private formBuilder:FormBuilder, private store: Store<fromRoot.State>) { 
+  constructor(private router: Router, private todoService:TodoService, 
+            private formBuilder:FormBuilder, private store: Store<fromRoot.State>,
+            public dialog: MatDialog) { 
   }
 
   ngOnInit(){
@@ -38,4 +40,13 @@ export class TodosComponent implements OnInit {
     console.log(`delete ${id}`);
     this.store.dispatch(new TodoActions.Delete(id));
   }
+
+  select(id){
+    console.log(`select ${id}`);
+    this.store.dispatch(new TodoActions.Select(id));
+    const dialogRef = this.dialog.open(TodoEditComponent, {
+      width: '250px',
+    }); 
+  }
+
 }

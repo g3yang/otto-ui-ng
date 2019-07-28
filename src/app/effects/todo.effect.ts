@@ -9,10 +9,9 @@ import {
 import { Observable, fromEventPattern } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
 
-
 import * as TodoAction from '../actions/todo.action';
-import { Todo } from '../models/todo';
 import { TodoService } from '../services/todo.service';
+import { Todo } from '../interfaces/todo';
 
 @Injectable()
 export class TodoEffects {
@@ -25,40 +24,34 @@ export class TodoEffects {
         ofType(TodoAction.ActionTypes.LOAD_START),
         mergeMap(()=>
             this.service.getTodos()
-                .pipe( map(todos=>{
-                            const newTodos  = todos.map(t=>{
-                                return {
-                                    id: t._id,
-                                    title: t.title
-                                };
-                            });
-                            return new TodoAction.LoadSuccess(newTodos)
-                        })
-                )
+                .pipe(map(todos=>{                         
+                    return new TodoAction.LoadSuccess(todos)
+                }))
         )
     )
 
     @Effect()
     addTodo$: Observable<Action> = this.actions$.pipe(
         ofType(TodoAction.ActionTypes.ADD),
-        map((action:TodoAction.Add)=> action.payload),
-        mergeMap((todo)=>{
-            return this.service.addTodo(todo)
-                    .pipe( map(()=>{
-                        return new TodoAction.LoadStart();
-                    })
-                )
+        map(action=>(action as TodoAction.Add).payload),        
+        mergeMap((payload)=>{
+            return this.service.addTodo(payload)
+                    .pipe( 
+                        map((todo)=>{
+                            return new TodoAction.AddSuccess(todo);
+                        })
+                    )
         })
     )
 
     @Effect()
     deleteTodo$: Observable<Action> = this.actions$.pipe(
         ofType(TodoAction.ActionTypes.DELETE),
-        map((action:TodoAction.Delete)=> action.payload),
+        map((action:TodoAction.Delete)=> action.id),
         mergeMap((id)=>{
             return this.service.deleteTodo(id)                    
                     .pipe( map(()=>{
-                        return new TodoAction.LoadStart();
+                        return new TodoAction.DeleteSuccess(id);
                     })
                 )
         })
@@ -66,12 +59,12 @@ export class TodoEffects {
 
     @Effect()
     updateTodo$: Observable<Action> = this.actions$.pipe(
-        ofType(TodoAction.ActionTypes.UPDATE),
-        map((action:TodoAction.Update)=> action.payload),
-        mergeMap((updatedTodo)=>{
-            return this.service.saveTodo(updatedTodo)                    
-                    .pipe( map(()=>{
-                        return new TodoAction.LoadStart();
+        ofType(TodoAction.ActionTypes.UPDATE_TITLE),
+        mergeMap((action)=>{
+            const {id, newTitle}= (action as TodoAction.UpdateTitle);
+            return this.service.updateTitle(id, newTitle)                    
+                    .pipe( map((todo)=>{
+                        return new TodoAction.UpdateTitleSuccess(id, newTitle);
                     })
                 )
         })
