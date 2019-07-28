@@ -18,10 +18,6 @@ import {
 import { MatDialogModule } from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
-import { ProductsComponent } from './products/products.component';
-import { ProductDetailComponent } from './product-detail/product-detail.component';
-import { ProductAddComponent } from './product-add/product-add.component';
-import { ProductEditComponent } from './product-edit/product-edit.component';
 import { LoginComponent } from './login/login.component';
 import { TodosComponent } from './todos/todos.component';
 import { TodoAddComponent } from './todo-add/todo-add.component';
@@ -48,10 +44,6 @@ export function HttpLoaderFactory(http: HttpClient) {
 @NgModule({
   declarations: [
     AppComponent,
-    ProductsComponent,
-    ProductDetailComponent,
-    ProductAddComponent,
-    ProductEditComponent,
     LoginComponent,
     TodosComponent,
     TodoAddComponent,
